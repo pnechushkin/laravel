@@ -22,6 +22,7 @@ class TasksController extends Controller
     }
 
     public function edit ($id) {
-        return view('edit_tasks',['id'=>$id]);
+        //$task= Task::WaveTask($id) ;
+        return view('edit_tasks', ['task' =>  Task::WaveTask($id)]);
     }
 }

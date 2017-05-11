@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Controller;
@@ -11,6 +11,11 @@ class Task extends Model
     {
         $tasks = self::orderBy('created_at', 'asc')->get();
         return $tasks;
+    }
+    public static function WaveTask ($id)
+    {
+        $task = DB::select('select * from tasks where id = ?', [$id]);
+        return $task;
     }
 
     public static function DellTasks ($id)
