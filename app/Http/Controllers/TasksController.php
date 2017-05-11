@@ -7,22 +7,31 @@ use Illuminate\Http\Request;
 class TasksController extends Controller
 {
 
+    protected $request;
+    protected $task;
+
+    public function __construct(Request $request)
+    {
+        $this->task = new \App\Task;
+        $this->request = $request;
+    }
 
     public function index() {
-        return view('tasks', ['tasks' => Task::GetTasks ()]);
+
+        return view('tasks', ['tasks' => $this->task->GetTasks ($this->request->user()->id)]);
     }
 
-    public function save (Request $request) {
-        Task::AddTasks ($request);
-         return view('tasks', ['tasks' => Task::GetTasks ()]);
+    public function save () {
+        $this->task->AddTasks ($this->request);
+         return view('tasks', ['tasks' => $this->task->GetTasks ($this->request->user()->id)]);
     }
     public function delete ($id) {
-        Task::DellTasks($id);
-         return view('tasks', ['tasks' =>  Task::GetTasks ()]);
+        $this->task->DellTasks($id);
+         return view('tasks', ['tasks' =>  $this->task->GetTasks ($this->request->user()->id)]);
     }
 
     public function edit ($id) {
         //$task= Task::WaveTask($id) ;
-        return view('edit_tasks', ['task' =>  Task::WaveTask($id)]);
+        return view('edit_tasks', ['task' =>  $this->task->ViewTask($id)]);
     }
 }

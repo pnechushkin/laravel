@@ -19,8 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/tasks', 'TasksController@index')->name('tasks');;
-Route::post('/tasks', 'TasksController@save');
-Route::delete('task/{id}', 'TasksController@delete');
-Route::get('edit_task/{id}', 'TasksController@edit')->name('edit');
-//Route::get('edit_task/{id}', 'TasksController@edit');
+Route::get('/tasks', 'TasksController@index')->middleware('auth')->name('tasks');;
+Route::post('/tasks', 'TasksController@save')->middleware('auth');
+Route::delete('tasks/{id}', 'TasksController@delete')->middleware('auth');
+Route::get('edit_task/{id}', 'TasksController@edit')->name('edit')->middleware('auth');
